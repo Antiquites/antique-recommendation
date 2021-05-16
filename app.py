@@ -1,12 +1,12 @@
 import flask
 from flask import request, jsonify
 import pandas as pd
-
+import  random
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 # Create some test data for our catalog in the form of a list of dictionaries.
-original = pd.read_csv('arts_crafts3.csv')
+original = pd.read_csv('arts_craftss.csv')
 
 # set first column to index
 df = pd.read_csv('arts_crafts_result.csv', index_col=0)
@@ -35,7 +35,7 @@ def api_id():
 
     # check if user exists
     if userId not in original['userId'].values:
-        return 'user not found', 404
+        return jsonify(random.choices(original['title'].to_list(),k=10))
 
     # get already purchased, rated items
     rated = original[original['userId'] == userId]['title'].to_list()
